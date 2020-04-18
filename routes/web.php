@@ -14,5 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $boards = \App\Board::all();
+
+    return view('welcome', [
+        'boards' => $boards,
+    ]);
 });
+
+Route::get('/board/{board}', 'BoardsController@show');
