@@ -1,5 +1,11 @@
 <?php
 
+putenv('DB_DATABASE=' . getenv('MYSQL_ADDON_DB'));
+putenv('DB_HOST=' . getenv('MYSQL_ADDON_HOST'));
+putenv('DB_PASSWORD=' . getenv('MYSQL_ADDON_PASSWORD'));
+putenv('DB_PORT=' . getenv('MYSQL_ADDON_PORT'));
+putenv('DB_USERNAME=' . getenv('MYSQL_ADDON_USER'));
+
 return [
 
     /*
