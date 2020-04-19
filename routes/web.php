@@ -22,3 +22,5 @@ Route::get('/', function () {
 });
 
 Route::get('/board/{board}', 'BoardsController@show');
+
+Auth::routes();
