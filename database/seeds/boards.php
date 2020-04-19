@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class boards extends Seeder
@@ -30,14 +31,22 @@ class boards extends Seeder
 
         DB::table('boards')->insert([
             'title' => "Prices scale",
-            'author_id' => $user_1->id
+            'author_id' => $user_1->id,
+            'description' => 'Price board description.',
+            'status' => 'new',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
 
         $price_board = \App\Board::orderBy('id', 'desc')->first();
 
         DB::table('boards')->insert([
-            'title' => "What do we die from?",
-            'author_id' => $user_2->id
+            'title' => "What do we die of?",
+            'author_id' => $user_2->id,
+            'description' => 'Death board description.',
+            'status' => 'new',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ]);
         $die_board = \App\Board::orderBy('id', 'desc')->first();
 
