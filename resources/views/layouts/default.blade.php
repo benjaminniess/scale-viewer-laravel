@@ -25,6 +25,12 @@
                         <i class="fas fa-home fa-2x"></i>
                     </a>
 
+                    @auth
+                        <a href="board/create" class="navbar-item">
+                            Add a board
+                        </a>
+                    @endauth
+
                 </div>
 
                 <div class="navbar-end">
