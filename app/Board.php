@@ -18,4 +18,12 @@ class Board extends Model
     public function permalink() {
         return '/board/' . $this->id;
     }
+
+    /**
+     * Generates the edit permalink
+     * @return string
+     */
+    public function edit_permalink() {
+        return $this->permalink() . '/edit/';
+    }
 }

@@ -23,7 +23,9 @@ Route::get('/', function () {
 
 Route::get('/board/create', 'BoardsController@create')->middleware('auth');
 Route::get('/board/{board}', 'BoardsController@show');
+Route::get('/board/{board}/edit', 'BoardsController@edit')->middleware('auth');
 
 Route::post('/board', 'BoardsController@store')->middleware('auth');
+Route::put('/board/{board}', 'BoardsController@update')->middleware('auth');
 
 Auth::routes();

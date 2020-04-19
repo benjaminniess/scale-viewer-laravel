@@ -35,7 +35,7 @@
 
                 <div class="navbar-end">
                     @auth
-                        <p class="navbar-item">Bonjour {{ Auth::user()->name }},</p>
+                        <p class="navbar-item">Hi {{ Auth::user()->name }},</p>
                         <div class="buttons">
                             <a href="{{ route('logout') }}" class="button is-primary" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">

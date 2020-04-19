@@ -17,12 +17,14 @@ class BoardsController extends Controller
      */
     public function show(Board $board)
     {
+        $user = Auth::user();
 
         $numbers = $board->numbers();
 
         return view('boards.show', [
             'board' => $board,
             'numbers' => $numbers,
+            'edit_permalink' => ! empty( $user ) && $user->id === $board->author_id ? $board->edit_permalink() : false,
         ]);
     }
 
@@ -61,6 +63,58 @@ class BoardsController extends Controller
         $board->description = $request->description;
         $board->created_at = Carbon::now();
         $board->updated_at = Carbon::now();
+        $board->save();
+
+        return redirect( $board->permalink() );
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Board $board
+     * @return \Illuminate\Contracts\View\Factory
+     */
+    public function edit(Board $board)
+    {
+        $user = Auth::user();
+        if (empty($user)) {
+            abort(403, 'You must be logged.');
+        }
+
+        if ( $user->id !== $board->author_id ) {
+            abort(403, "You can't edit this board");
+        }
+
+        return view('boards.edit', [
+            'board' => $board,
+            'back_permalink' => $board->permalink()
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Board $board
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, Board $board)
+    {
+        $user = Auth::user();
+        if (empty($user)) {
+            abort(403, 'You must be logged.');
+        }
+
+        if ( $user->id !== $board->author_id ) {
+            abort(403, "You can't edit this board");
+        }
+
+        request()->validate([
+            'title' => [ 'required' ],
+            'description' => [ 'required' ],
+        ]);
+        $board->title = $request->title;
+        $board->description = $request->description;
         $board->save();
 
         return redirect( $board->permalink() );
