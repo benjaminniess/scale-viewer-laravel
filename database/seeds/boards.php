@@ -11,14 +11,33 @@ class boards extends Seeder
      */
     public function run()
     {
+
+        DB::table('users')->insert([
+            'name' => "User 1",
+            'email' => "user1@gmail.com",
+            'password' => Hash::make(123456789),
+        ]);
+
+        $user_1 = \App\User::orderBy('id', 'desc')->first();
+
+        DB::table('users')->insert([
+            'name' => "User 2",
+            'email' => "user2@gmail.com",
+            'password' => Hash::make(123456789),
+        ]);
+
+        $user_2 = \App\User::orderBy('id', 'desc')->first();
+
         DB::table('boards')->insert([
             'title' => "Prices scale",
+            'author_id' => $user_1->id
         ]);
 
         $price_board = \App\Board::orderBy('id', 'desc')->first();
 
         DB::table('boards')->insert([
             'title' => "What do we die from?",
+            'author_id' => $user_2->id
         ]);
         $die_board = \App\Board::orderBy('id', 'desc')->first();
 
