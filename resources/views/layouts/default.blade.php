@@ -26,7 +26,7 @@
                     </a>
 
                     @auth
-                        <a href="board/create" class="navbar-item">
+                        <a href="/board/create" class="navbar-item">
                             Add a board
                         </a>
                     @endauth

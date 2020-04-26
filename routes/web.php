@@ -28,4 +28,6 @@ Route::get('/board/{board}/edit', 'BoardsController@edit')->middleware('auth');
 Route::post('/board', 'BoardsController@store')->middleware('auth');
 Route::put('/board/{board}', 'BoardsController@update')->middleware('auth');
 
+Route::post('/board/{board}/numbers', 'BoardsController@store_number')->middleware('auth');
+
 Auth::routes();
