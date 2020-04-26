@@ -47,9 +47,6 @@ class BoardsController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        if (empty($user)) {
-            abort(403, 'You must be logged.');
-        }
 
         request()->validate([
             'title' => [ 'required' ],
@@ -77,10 +74,6 @@ class BoardsController extends Controller
     public function edit(Board $board)
     {
         $user = Auth::user();
-        if (empty($user)) {
-            abort(403, 'You must be logged.');
-        }
-
         if ( $user->id !== $board->author_id ) {
             abort(403, "You can't edit this board");
         }
@@ -101,10 +94,6 @@ class BoardsController extends Controller
     public function update(Request $request, Board $board)
     {
         $user = Auth::user();
-        if (empty($user)) {
-            abort(403, 'You must be logged.');
-        }
-
         if ( $user->id !== $board->author_id ) {
             abort(403, "You can't edit this board");
         }
