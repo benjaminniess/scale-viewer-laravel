@@ -37,4 +37,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Override the default login controller so we can pass some data
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showLoginForm() {
+        return view('auth.login', [
+            'api_key' => config('firebase.api_key'),
+            'app_name' => config('firebase.app_name'),
+        ]);
+    }
 }

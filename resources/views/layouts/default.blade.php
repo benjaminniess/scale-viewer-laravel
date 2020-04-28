@@ -11,11 +11,11 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @yield('head')
 
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script defer src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
-
     <section class="section">
         <div class="container">
 

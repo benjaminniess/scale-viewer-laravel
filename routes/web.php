@@ -30,4 +30,6 @@ Route::put('/board/{board}', 'BoardsController@update')->middleware('auth');
 
 Route::post('/board/{board}/numbers', 'BoardsController@store_number')->middleware('auth');
 
+Route::get('google-connect', 'GoogleConnectController');
+
 Auth::routes();

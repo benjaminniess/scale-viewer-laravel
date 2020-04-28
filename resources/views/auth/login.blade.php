@@ -1,5 +1,17 @@
 @extends('layouts.default')
 
+@section('head')
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+<script>
+    var firebaseConfig = {
+        apiKey: "{{ $api_key }}",
+        authDomain: "{{ $app_name }}.firebaseapp.com",
+        databaseURL: "https://{{ $app_name }}.firebaseio.com",
+    };
+</script>
+@endsection
+
 @section('content')
 
 <form method="POST" action="{{ route('login') }}">
@@ -39,6 +51,10 @@
     <div class="field is-grouped">
         <div class="control">
             <button type="submit" class="button is-link">Login</button>
+        </div>
+
+        <div class="control">
+            <button type="button" id="google-connect-button" class="button is-link">Login with Google</button>
         </div>
 
         @if (Route::has('password.request'))
