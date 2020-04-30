@@ -15,35 +15,40 @@ class BoardUpdate extends Migration
     {
         if (!Schema::hasColumn('boards', 'author_id')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->bigInteger('author_id')->unsigned();
+                $table->bigInteger('author_id')
+                      ->unsigned()
+                      ->nullable();
+                $table->foreign('author_id')
+                      ->references('id')
+                      ->on('users');
             });
         }
 
-        Schema::table('boards', function (Blueprint $table) {
-            $table->foreign('author_id')->references('id')->on('users');
-        });
-
         if (!Schema::hasColumn('boards', 'status')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->string('status', 50)->default('new');
+                $table->string('status', 50)
+                      ->default('new');
             });
         }
 
         if (!Schema::hasColumn('boards', 'description')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->text('description')->nullable();
+                $table->text('description')
+                      ->nullable();
             });
         }
 
         if (!Schema::hasColumn('boards', 'created_at')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->dateTime('created_at');
+                $table->dateTime('created_at')
+                      ->default(now());
             });
         }
 
         if (!Schema::hasColumn('boards', 'updated_at')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->dateTime('updated_at');
+                $table->dateTime('updated_at')
+                      ->default(now());
             });
         }
     }
