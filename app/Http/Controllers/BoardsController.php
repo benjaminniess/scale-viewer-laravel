@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBoard;
+use App\Http\Requests\UpdateBoard;
 use App\Number;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -75,25 +76,13 @@ class BoardsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\UpdateBoard $request
      * @param  \App\Board $board
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Board $board)
+    public function update(UpdateBoard $request, Board $board)
     {
-        $user = Auth::user();
-        if ( $user->id !== $board->author_id ) {
-            abort(403, "You can't edit this board");
-        }
-
-        request()->validate([
-            'title' => [ 'required' ],
-            'description' => [ 'required' ],
-        ]);
-        $board->title = $request->title;
-        $board->description = $request->description;
-        $board->save();
-
+        $board->update_board($request);
         return redirect( $board->permalink() );
     }
 

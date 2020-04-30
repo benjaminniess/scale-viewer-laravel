@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Http\Requests\StoreBoard;
+use App\Http\Requests\UpdateBoard;
 use Illuminate\Database\Eloquent\Model;
 
 class Board extends Model
@@ -45,5 +46,16 @@ class Board extends Model
         $validated_data['status'] = 'new';
 
         return $board = self::create($validated_data);
+    }
+
+    /**
+     * @param \App\Http\Requests\UpdateBoard $request
+     * @return \App\Board $board
+     */
+    public function update_board(UpdateBoard $request)
+    {
+        $validated_data = $request->validated();
+        $board = $this->update($validated_data);
+        return $board;
     }
 }
