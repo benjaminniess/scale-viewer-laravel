@@ -2,10 +2,17 @@
 
 namespace App;
 
+use App\Http\Requests\StoreBoard;
+use App\Http\Requests\UpdateBoard;
 use Illuminate\Database\Eloquent\Model;
 
 class Board extends Model
 {
+    protected $guarded = ['id'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function numbers() {
         return $this->hasMany( '\App\Number' )->get();
     }
@@ -25,5 +32,30 @@ class Board extends Model
      */
     public function edit_permalink() {
         return $this->permalink() . '/edit/';
+    }
+
+    /**
+     * Store a board in database
+     * @param StoreBoard $request
+     * @return \App\Board
+     */
+    static function store_board(StoreBoard $request)
+    {
+        $validated_data = $request->validated();
+        $validated_data['author_id'] = auth()->user()->id;
+        $validated_data['status'] = 'new';
+
+        return $board = self::create($validated_data);
+    }
+
+    /**
+     * @param \App\Http\Requests\UpdateBoard $request
+     * @return \App\Board $board
+     */
+    public function update_board(UpdateBoard $request)
+    {
+        $validated_data = $request->validated();
+        $board = $this->update($validated_data);
+        return $board;
     }
 }
