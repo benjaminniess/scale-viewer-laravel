@@ -27,7 +27,7 @@ class BoardsController extends Controller
         return view('boards.show', [
             'board' => $board,
             'numbers' => $numbers,
-            'edit_permalink' => $user->is_author($board) ? $board->edit_permalink() : false,
+            'edit_permalink' => $user && $user->is_author($board) ? $board->edit_permalink() : false,
         ]);
     }
 
