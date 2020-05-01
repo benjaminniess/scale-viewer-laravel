@@ -27,7 +27,7 @@ class BoardsController extends Controller
         return view('boards.show', [
             'board' => $board,
             'numbers' => $numbers,
-            'edit_permalink' => ! empty( $user ) && $user->id === $board->author_id ? $board->edit_permalink() : false,
+            'edit_permalink' => $user && $user->is_author($board) ? $board->edit_permalink() : false,
         ]);
     }
 
@@ -61,10 +61,7 @@ class BoardsController extends Controller
      */
     public function edit(Board $board)
     {
-        $user = Auth::user();
-        if ( $user->id !== $board->author_id ) {
-            abort(403, "You can't edit this board");
-        }
+        $this->authorize('update', $board);
 
         return view('boards.edit', [
             'board' => $board,
@@ -82,6 +79,7 @@ class BoardsController extends Controller
      */
     public function update(UpdateBoard $request, Board $board)
     {
+        $this->authorize('update', $board);
         $board->update_board($request);
         return redirect( $board->permalink() );
     }
@@ -94,6 +92,8 @@ class BoardsController extends Controller
      */
     public function store_number(Request $request, Board $board)
     {
+        $this->authorize('update', $board);
+
         request()->validate([
             'new_number' => [ 'required', 'integer' ],
             'new_number_title' => 'required',
