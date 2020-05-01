@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBoard;
+use App\Http\Requests\UpdateBoard;
 use App\Number;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -42,27 +44,12 @@ class BoardsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\StoreBoard $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreBoard $request)
     {
-        $user = Auth::user();
-
-        request()->validate([
-            'title' => [ 'required' ],
-            'description' => [ 'required' ],
-        ]);
-
-        $board = new Board();
-        $board->title = $request->title;
-        $board->author_id = $user->id;
-        $board->status = 'new';
-        $board->description = $request->description;
-        $board->created_at = Carbon::now();
-        $board->updated_at = Carbon::now();
-        $board->save();
-
+        $board = Board::store_board($request);
         return redirect( $board->permalink() );
     }
 
@@ -86,22 +73,14 @@ class BoardsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Http\Requests\UpdateBoard $request
      * @param  \App\Board $board
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Board $board)
+    public function update(UpdateBoard $request, Board $board)
     {
         $this->authorize('update', $board);
-
-        request()->validate([
-            'title' => [ 'required' ],
-            'description' => [ 'required' ],
-        ]);
-        $board->title = $request->title;
-        $board->description = $request->description;
-        $board->save();
-
+        $board->update_board($request);
         return redirect( $board->permalink() );
     }
 
