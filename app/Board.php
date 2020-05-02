@@ -35,20 +35,6 @@ class Board extends Model
     }
 
     /**
-     * Store a board in database
-     * @param StoreBoard $request
-     * @return \App\Board
-     */
-    static function store_board(StoreBoard $request)
-    {
-        $validated_data = $request->validated();
-        $validated_data['author_id'] = auth()->user()->id;
-        $validated_data['status'] = 'new';
-
-        return $board = self::create($validated_data);
-    }
-
-    /**
      * @param \App\Http\Requests\UpdateBoard $request
      * @return \App\Board $board
      */
