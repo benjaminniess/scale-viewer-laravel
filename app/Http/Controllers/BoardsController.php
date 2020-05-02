@@ -49,7 +49,12 @@ class BoardsController extends Controller
      */
     public function store(StoreBoard $request)
     {
-        $board = Board::store_board($request);
+        $board = Board::create([
+            'title'       => request('title'),
+            'description' => request('description'),
+            'author_id'   => auth()->user()->id,
+            'status'      => 'new'
+        ]);
         return redirect( $board->permalink() );
     }
 
