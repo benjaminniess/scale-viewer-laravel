@@ -11,10 +11,21 @@ class Board extends Model
     protected $guarded = ['id'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function numbers() {
-        return $this->hasMany( '\App\Number' )->get();
+        return $this->hasMany('\App\Number');
+    }
+
+    /**
+     * Add a number to a board
+     *
+     * @param $attributes
+     * @return \App\Number
+     */
+    public function add_number($attributes)
+    {
+        return $this->numbers()->create($attributes);
     }
 
     /**

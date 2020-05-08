@@ -22,7 +22,7 @@ class BoardsController extends Controller
     {
         $user = Auth::user();
 
-        $numbers = $board->numbers();
+        $numbers = $board->numbers()->get();
 
         return view('boards.show', [
             'board' => $board,
@@ -71,7 +71,7 @@ class BoardsController extends Controller
         return view('boards.edit', [
             'board' => $board,
             'back_permalink' => $board->permalink(),
-            'numbers' => $board->numbers(),
+            'numbers' => $board->numbers()->get()
         ]);
     }
 
@@ -87,30 +87,5 @@ class BoardsController extends Controller
         $this->authorize('update', $board);
         $board->update_board($request);
         return redirect( $board->permalink() );
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function store_number(Request $request, Board $board)
-    {
-        $this->authorize('update', $board);
-
-        request()->validate([
-            'new_number' => [ 'required', 'integer' ],
-            'new_number_title' => 'required',
-        ]);
-
-        $number = new Number();
-        $number->number = $request->new_number;
-        $number->title = $request->new_number_title;
-        $number->description = $request->new_number_description;
-        $number->board_id = $board->id;
-        $number->save();
-
-        return redirect( $board->edit_permalink() );
     }
 }
