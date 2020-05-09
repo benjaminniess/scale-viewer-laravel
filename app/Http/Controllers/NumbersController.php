@@ -34,7 +34,6 @@ class NumbersController extends Controller
      *
      * @param \App\Http\Requests\StoreNumber $request
      * @param Board $board
-     * @return \Illuminate\Database\Eloquent\Model
      */
     public function store(StoreNumber $request, Board $board)
     {
