@@ -137,8 +137,8 @@ if (typeof firebaseConfig !== 'undefined') {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/bniess/www/laravel/scale-viewer/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/bniess/www/laravel/scale-viewer/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/benjamin/www/laravel/scale-viewer/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/benjamin/www/laravel/scale-viewer/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

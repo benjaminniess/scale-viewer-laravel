@@ -3,11 +3,23 @@
 @section('content')
 
     <div class="container main-container">
-        <ul>
+        <div class="numbers-container">
             @foreach ($numbers as $number)
-                <li>{{ $number->title }} : {{ $number->number }}</li>
+                <div class="number-older">
+                    <div class="number-surface" style="
+                    @foreach($number['extraData']['css'] as $property => $value)
+                    {{$property}}:{{$value}};
+                    @endforeach
+                        "></div>
+                    <p>{{$number['number']}}</p>
+                    <h4>{{$number['title']}}</h4>
+                    @if ( $number['description'] )
+                        <!--<p>{{$number['description']}}</p>-->
+                    @endif
+                </div>
+
             @endforeach
-        </ul>
+        </div>
 
         {!!$board->description!!}
 

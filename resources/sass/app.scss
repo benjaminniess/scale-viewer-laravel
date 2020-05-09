@@ -7,3 +7,21 @@
 .main-container {
     margin-top:30px;
 }
+
+.numbers-container {
+    position: relative;
+    overflow: auto;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.number-older {
+    margin-right: 100px;
+}
+
+.number-surface {
+    background-color:blue;
+    margin-right: 50px;
+}
