@@ -26,7 +26,6 @@ class StoreNumber extends FormRequest
         return [
             'new_number'       => [ 'required', 'integer' ],
             'new_number_title' => 'required',
-            'new_number_description' => 'required'
         ];
     }
 
