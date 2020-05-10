@@ -12,7 +12,7 @@
             <div class="field">
                 <label for="board-title" class="label">Board name</label>
                 <div class="control">
-                    <input class="input" type="text" placeholder="Enter your board name" value="{{$board->title}}" name="title" id="board-title">
+                    <input class="input" type="text" placeholder="Enter your board name" value="{{old('title', $board->title)}}" name="title" id="board-title">
                 </div>
             </div>
 
@@ -23,7 +23,7 @@
             <div class="field">
                 <label for="board-description" class="label">Description</label>
                 <div class="control">
-                    <textarea class="textarea" name="description" id="board-description">{{$board->description}}</textarea>
+                    <textarea class="textarea" name="description" id="board-description">{{old('description', $board->description)}}</textarea>
                 </div>
 
                 @error('description')
