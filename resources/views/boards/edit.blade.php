@@ -62,7 +62,14 @@
         @if ( $numbers )
             <ul>
                 @foreach ( $numbers as $key => $number )
-                    <li>{{$number->title}}: {{$number->number}}</li>
+                    <li>
+                        <a href="{{route('edit_number', [ 'board' => $board->id, 'number' => $number->id ])}}">
+                            <span class="icon">
+                                <i class="fas fa-pen"></i>
+                            </span>
+                            {{$number->title}}: {{$number->number}}
+                        </a>
+                    </li>
                 @endforeach
             </ul>
         @endif

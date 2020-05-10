@@ -29,6 +29,8 @@ Route::post('/board', 'BoardsController@store')->middleware('auth')->name('store
 Route::put('/board/{board}', 'BoardsController@update')->middleware('auth')->name('update_board');
 
 Route::post('/board/{board}/numbers', 'NumbersController@store')->middleware('auth')->name('store_number');
+Route::get('/board/{board}/numbers/{number}/edit', 'NumbersController@edit')->middleware('auth')->name('edit_number');
+Route::put('/board/{board}/numbers/{number}', 'NumbersController@update')->middleware('auth')->name('update_number');
 
 Route::get('google-connect', 'GoogleConnectController')->name('google_connect');
 

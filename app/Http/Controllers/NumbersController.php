@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Board;
+use App\Http\Requests\UpdateNumber;
 use App\Number;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreNumber;
@@ -64,24 +65,46 @@ class NumbersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \App\Board  $board
      * @param  \App\Number  $number
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory
      */
-    public function edit(Number $number)
+    public function edit(Board $board, Number $number)
     {
-        //
+        // TODO: Add policy class
+        //$this->authorize('update', $number);
+
+        return view('numbers.edit', [
+            'number' => $number,
+            'board' => $board,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdateNumber $request
      * @param  \App\Number  $number
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Number $number)
+    public function update(UpdateNumber $request, Board $board, Number $number)
     {
-        //
+
+        //TODO: Permissions check
+
+        $request->validated();
+
+        $number->update([
+            'number' => $request->update_number,
+            'title' => $request->update_number_title,
+            'description' => $request->update_number_description,
+            'main_color' => $request->update_number_main_color,
+            'url' => $request->update_number_url,
+            'shortize' => (int) $request->update_number_shortize,
+            'hide_number' => (int) $request->update_number_hide_number,
+        ]);
+
+        return redirect(route('edit_board', $board->id));
     }
 
     /**
