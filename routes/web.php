@@ -19,17 +19,17 @@ Route::get('/', function () {
     return view('welcome', [
         'boards' => $boards,
     ]);
-});
+})->name('home');
 
-Route::get('/board/create', 'BoardsController@create')->middleware('auth');
-Route::get('/board/{board}', 'BoardsController@show');
-Route::get('/board/{board}/edit', 'BoardsController@edit')->middleware('auth');
+Route::get('/board/create', 'BoardsController@create')->middleware('auth')->name('create_board');
+Route::get('/board/{board}', 'BoardsController@show')->name('show_board');
+Route::get('/board/{board}/edit', 'BoardsController@edit')->middleware('auth')->name('edit_board');
 
-Route::post('/board', 'BoardsController@store')->middleware('auth');
-Route::put('/board/{board}', 'BoardsController@update')->middleware('auth');
+Route::post('/board', 'BoardsController@store')->middleware('auth')->name('store_board');
+Route::put('/board/{board}', 'BoardsController@update')->middleware('auth')->name('update_board');
 
-Route::post('/board/{board}/numbers', 'NumbersController@store')->middleware('auth');
+Route::post('/board/{board}/numbers', 'NumbersController@store')->middleware('auth')->name('store_number');
 
-Route::get('google-connect', 'GoogleConnectController');
+Route::get('google-connect', 'GoogleConnectController')->name('google_connect');
 
 Auth::routes();

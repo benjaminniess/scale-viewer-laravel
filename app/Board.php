@@ -2,13 +2,18 @@
 
 namespace App;
 
-use App\Http\Requests\StoreBoard;
 use App\Http\Requests\UpdateBoard;
 use Illuminate\Database\Eloquent\Model;
 
 class Board extends Model
 {
     protected $guarded = ['id'];
+
+    public static $templates = [
+        'default' => 'Default (Honrizontal display)',
+        'vertical' => 'Vertical display',
+        'dates' => 'Date ranges',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -26,23 +31,6 @@ class Board extends Model
     public function add_number($attributes)
     {
         return $this->numbers()->create($attributes);
-    }
-
-    /**
-     * Generates a permalink for the current board
-     *
-     * @return string
-     */
-    public function permalink() {
-        return '/board/' . $this->id;
-    }
-
-    /**
-     * Generates the edit permalink
-     * @return string
-     */
-    public function edit_permalink() {
-        return $this->permalink() . '/edit/';
     }
 
     /**

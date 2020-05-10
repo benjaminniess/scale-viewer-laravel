@@ -5,7 +5,7 @@
     <div class="container main-container">
         <h1 class="title">Edit a board</h1>
 
-        <form method="POST" action="/board/{{$board->id}}">
+        <form method="POST" action="{{route('update_board', $board->id) }}">
             @csrf
             @method('PUT')
 
@@ -52,7 +52,7 @@
             </ul>
         @endif
 
-        <form method="POST" action="/board/{{$board->id}}/numbers">
+        <form method="POST" action="{{route('store_number', $board->id) }}">
             @csrf
 
             <div class="field">

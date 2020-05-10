@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBoard;
 use App\Http\Requests\UpdateBoard;
-use App\Number;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use \App\Board;
 use Auth;
 
@@ -66,7 +63,7 @@ class BoardsController extends Controller
         return view('boards.show', [
             'board' => $board,
             'numbers' => $numbers_data,
-            'edit_permalink' => $user && $user->is_author($board) ? $board->edit_permalink() : false,
+            'edit_permalink' => $user && $user->is_author($board) ? route('edit_board', $board->id) : false,
         ]);
     }
 
@@ -77,7 +74,9 @@ class BoardsController extends Controller
      */
     public function create()
     {
-        return view('boards.create');
+        return view('boards.create', [
+            'templates' => \App\Board::$templates,
+        ]);
     }
 
     /**
@@ -94,7 +93,7 @@ class BoardsController extends Controller
             'author_id'   => auth()->user()->id,
             'status'      => 'new'
         ]);
-        return redirect($board->permalink());
+        return redirect(route('show_board', $board->id));
     }
 
     /**
@@ -125,6 +124,6 @@ class BoardsController extends Controller
     {
         $this->authorize('update', $board);
         $board->update_board($request);
-        return redirect($board->permalink());
+        return redirect(route('show_board', $board->id));
     }
 }

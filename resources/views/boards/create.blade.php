@@ -5,7 +5,7 @@
     <div class="container main-container">
         <h1 class="title">Create a new board</h1>
 
-        <form method="POST" action="/board">
+        <form method="POST" action="{{route('store_board')}}">
             @csrf
 
             <div class="field">
@@ -26,7 +26,7 @@
                 </div>
 
                 @error('description')
-                <p class="help is-danger">{{$errors->first('description')}}</p>
+                    <p class="help is-danger">{{$errors->first('description')}}</p>
                 @enderror
             </div>
 
@@ -35,7 +35,7 @@
                     <input type="submit" value="Add" class="button is-link">
                 </div>
                 <div class="control">
-                    <a href="/" class="button is-link is-light">Back</a>
+                    <a href="{{route('home')}}" class="button is-link is-light">Back</a>
                 </div>
             </div>
         </form>
