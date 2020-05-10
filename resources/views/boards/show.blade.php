@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container main-container">
+    <div class="container main-container template-{{$board->template}}">
         <div class="numbers-container">
             @foreach ($numbers as $number)
                 <div class="number-older">

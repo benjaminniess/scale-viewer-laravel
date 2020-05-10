@@ -31,6 +31,21 @@
                 @enderror
             </div>
 
+            <div class="field">
+                <label for="board-template" class="label">Template</label>
+
+                <div class="control">
+                    @foreach($templates as $template_key => $template_name)
+                        <input type="radio" id="template-{{$template_key}}" name="template" value="{{$template_key}}" @if ($board->template === $template_key) checked="checked" @endif>
+                        <label for="template-{{$template_key}}">{{$template_name}}</label>
+                    @endforeach
+                </div>
+
+                @error('template')
+                <p class="help is-danger">{{$errors->first('template')}}</p>
+                @enderror
+            </div>
+
             <div class="field is-grouped">
                 <div class="control">
                     <input type="submit" value="Update" class="button is-link">

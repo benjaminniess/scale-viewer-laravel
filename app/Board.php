@@ -26,7 +26,7 @@ class Board extends Model
      * Add a number to a board
      *
      * @param $attributes
-     * @return \App\Number
+     * @return \Illuminate\Database\Eloquent\Model
      */
     public function add_number($attributes)
     {
@@ -35,12 +35,12 @@ class Board extends Model
 
     /**
      * @param \App\Http\Requests\UpdateBoard $request
-     * @return \App\Board $board
+     * @return bool
      */
     public function update_board(UpdateBoard $request)
     {
         $validated_data = $request->validated();
-        $board = $this->update($validated_data);
-        return $board;
+
+        return $this->update($validated_data);
     }
 }

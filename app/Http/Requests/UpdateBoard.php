@@ -24,8 +24,9 @@ class UpdateBoard extends FormRequest
     public function rules()
     {
         return [
-            'title'       => 'required',
-            'description' => 'required'
+            'title' => 'required',
+            'description' => 'required',
+            'template' => 'required'
         ];
     }
 
@@ -37,8 +38,9 @@ class UpdateBoard extends FormRequest
     public function messages()
     {
         return [
-            'title.required'       => "Please give the board a name",
+            'title.required' => "Please give the board a name",
             'description.required' => "Please give the board a description",
+            'template.required' => "Please select a template",
         ];
     }
 }

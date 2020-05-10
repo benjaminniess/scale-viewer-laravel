@@ -88,10 +88,11 @@ class BoardsController extends Controller
     public function store(StoreBoard $request)
     {
         $board = Board::create([
-            'title'       => request('title'),
+            'title' => request('title'),
             'description' => request('description'),
-            'author_id'   => auth()->user()->id,
-            'status'      => 'new'
+            'author_id' => auth()->user()->id,
+            'status' => 'new',
+            'template' => request('template'),
         ]);
         return redirect(route('show_board', $board->id));
     }
@@ -108,8 +109,10 @@ class BoardsController extends Controller
 
         return view('boards.edit', [
             'board' => $board,
-            'back_permalink' => $board->permalink(),
-            'numbers' => $board->numbers()->get()
+            'back_permalink' => route('show_board', $board->id),
+            'numbers' => $board->numbers()->get(),
+            'template' => $board->template,
+            'templates' => \App\Board::$templates,
         ]);
     }
 
