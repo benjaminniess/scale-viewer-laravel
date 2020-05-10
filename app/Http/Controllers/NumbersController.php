@@ -38,9 +38,13 @@ class NumbersController extends Controller
     public function store(StoreNumber $request, Board $board)
     {
         $board->add_number([
-            'title'       => request('new_number_title'),
-            'number'      => request('new_number'),
-            'description' => request('new_number_description')
+            'title' => request('new_number_title'),
+            'number' => request('new_number'),
+            'description' => request('new_number_description'),
+            'main_color' => request('new_number_main_color'),
+            'url' => request('new_number_url'),
+            'shortize' => 1 === (int) request('new_number_shortize'),
+            'hide_number' => 1 === (int) request('new_number_hide_number'),
         ]);
 
         return back();

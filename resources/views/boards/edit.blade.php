@@ -103,6 +103,38 @@
                 @enderror
             </div>
 
+            <div class="field">
+                <label for="new_number_main_color" class="label">Main color</label>
+                <div class="control">
+                    <input class="input" type="color" value="{{ old('new_number_main_color') }}" name="new_number_main_color" id="new_number_main_color">
+                </div>
+            </div>
+
+            @error('new_number_main_color')
+            <p class="help is-danger">{{$errors->first('new_number_main_color')}}</p>
+            @enderror
+
+            <div class="field">
+                <label for="new_number_url" class="label">URL</label>
+                <div class="control">
+                    <input class="input" type="text" placeholder="https://" value="{{ old('new_number_url') }}" name="new_number_url" id="new_number_url">
+                </div>
+            </div>
+
+            @error('new_number_url')
+            <p class="help is-danger">{{$errors->first('new_number_url')}}</p>
+            @enderror
+
+            <div class="field">
+                <input type="checkbox" value="1" name="new_number_shortize" id="new_number_shortize" @if (old('new_number_shortize') === 1) checked="checked" @endif>
+                <label for="new_number_shortize" class="checkbox">Reduce the block size if too large?</label>
+            </div>
+
+            <div class="field">
+                <input type="checkbox" value="1" name="new_number_hide_number" id="new_number_hide_number" @if (old('new_number_hide_number') === 1) checked="checked" @endif>
+                <label for="new_number_hide_number" class="checkbox">Hide the number label from the board</label>
+            </div>
+
             <div class="field is-grouped">
                 <div class="control">
                     <input type="submit" value="Add" class="button is-link">

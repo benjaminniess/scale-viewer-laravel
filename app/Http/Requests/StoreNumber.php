@@ -24,7 +24,7 @@ class StoreNumber extends FormRequest
     public function rules()
     {
         return [
-            'new_number'       => [ 'required', 'integer' ],
+            'new_number' => [ 'required', 'integer' ],
             'new_number_title' => 'required',
         ];
     }
