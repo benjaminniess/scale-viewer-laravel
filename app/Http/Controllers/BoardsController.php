@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBoard;
 use App\Http\Requests\UpdateBoard;
-use \App\Board;
+use App\Models\Board;
 use Auth;
 
 class BoardsController extends Controller
@@ -12,14 +12,17 @@ class BoardsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Board $board
+     * @param  \App\Models\Board $board
      * @return \Illuminate\Contracts\View\Factory
      */
     public function show(Board $board)
     {
         $user = Auth::user();
 
-        $numbers = $board->numbers()->orderBy('number', 'asc')->get();
+        $numbers = $board
+            ->numbers()
+            ->orderBy('number', 'asc')
+            ->get();
 
         // The size of the minimum legend square
         $minimumScaleWidth = 4;
@@ -41,21 +44,30 @@ class BoardsController extends Controller
             // First row is for the legend. Set it the size of the minimum square
             if (0 === $row) {
                 $referenceIndex = $number->number;
-                $numbers_data[$row]['extraData']['css']['width'] = $minimumScaleWidth . 'px';
-                $numbers_data[$row]['extraData']['css']['height'] = $minimumScaleWidth . 'px';
+                $numbers_data[$row]['extraData']['css']['width'] =
+                    $minimumScaleWidth . 'px';
+                $numbers_data[$row]['extraData']['css']['height'] =
+                    $minimumScaleWidth . 'px';
             } else {
                 // Calculate the area of the square
-                $square_value = ceil($number->number * pow($minimumScaleWidth, 2) / $referenceIndex);
+                $square_value = ceil(
+                    ($number->number * pow($minimumScaleWidth, 2)) /
+                        $referenceIndex
+                );
 
                 // Get the square root to guess the width
                 $scaleNumber = (int) sqrt($square_value);
                 if ($scaleNumber <= $maximumScaleHeight) {
-                    $numbers_data[$row]['extraData']['css']['width'] = $scaleNumber . 'px';
-                    $numbers_data[$row]['extraData']['css']['height'] = $scaleNumber . 'px';
+                    $numbers_data[$row]['extraData']['css']['width'] =
+                        $scaleNumber . 'px';
+                    $numbers_data[$row]['extraData']['css']['height'] =
+                        $scaleNumber . 'px';
                 } else {
                     // If the max height is reached, block it and adjust width
-                    $numbers_data[$row]['extraData']['css']['width'] = ceil($square_value / $maximumScaleHeight) . 'px';
-                    $numbers_data[$row]['extraData']['css']['height'] = $maximumScaleHeight . 'px';
+                    $numbers_data[$row]['extraData']['css']['width'] =
+                        ceil($square_value / $maximumScaleHeight) . 'px';
+                    $numbers_data[$row]['extraData']['css']['height'] =
+                        $maximumScaleHeight . 'px';
                 }
             }
         }
@@ -63,7 +75,10 @@ class BoardsController extends Controller
         return view('boards.show', [
             'board' => $board,
             'numbers' => $numbers_data,
-            'edit_permalink' => $user && $user->is_author($board) ? route('edit_board', $board->id) : false,
+            'edit_permalink' =>
+                $user && $user->is_author($board)
+                    ? route('edit_board', $board->id)
+                    : false,
         ]);
     }
 
@@ -75,7 +90,7 @@ class BoardsController extends Controller
     public function create()
     {
         return view('boards.create', [
-            'templates' => \App\Board::$templates,
+            'templates' => \App\Models\Board::$templates,
         ]);
     }
 
@@ -112,7 +127,7 @@ class BoardsController extends Controller
             'back_permalink' => route('show_board', $board->id),
             'numbers' => $board->numbers()->get(),
             'template' => $board->template,
-            'templates' => \App\Board::$templates,
+            'templates' => \App\Models\Board::$templates,
         ]);
     }
 
@@ -120,7 +135,7 @@ class BoardsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateBoard $request
-     * @param  \App\Board $board
+     * @param  \App\Models\Board $board
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateBoard $request, Board $board)

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Board;
+use App\Models\Board;
 use App\Http\Requests\UpdateNumber;
-use App\Number;
+use App\Models\Number;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreNumber;
 
@@ -54,7 +54,7 @@ class NumbersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Number  $number
+     * @param  \App\Models\Number  $number
      * @return \Illuminate\Http\Response
      */
     public function show(Number $number)
@@ -65,8 +65,8 @@ class NumbersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Board  $board
-     * @param  \App\Number  $number
+     * @param  \App\Models\Board  $board
+     * @param  \App\Models\Number  $number
      * @return \Illuminate\Contracts\View\Factory
      */
     public function edit(Board $board, Number $number)
@@ -84,12 +84,11 @@ class NumbersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateNumber $request
-     * @param  \App\Number  $number
+     * @param  \App\Models\Number  $number
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UpdateNumber $request, Board $board, Number $number)
     {
-
         //TODO: Permissions check
 
         $request->validated();
@@ -110,7 +109,7 @@ class NumbersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Number  $number
+     * @param  \App\Models\Number  $number
      * @return \Illuminate\Http\Response
      */
     public function destroy(Number $number)

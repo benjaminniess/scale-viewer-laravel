@@ -15,40 +15,38 @@ class BoardUpdate extends Migration
     {
         if (!Schema::hasColumn('boards', 'author_id')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->bigInteger('author_id')
-                      ->unsigned()
-                      ->nullable();
-                $table->foreign('author_id')
-                      ->references('id')
-                      ->on('users');
+                $table
+                    ->bigInteger('author_id')
+                    ->unsigned()
+                    ->nullable();
+                $table
+                    ->foreign('author_id')
+                    ->references('id')
+                    ->on('users');
             });
         }
 
         if (!Schema::hasColumn('boards', 'status')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->string('status', 50)
-                      ->default('new');
+                $table->string('status', 50)->default('new');
             });
         }
 
         if (!Schema::hasColumn('boards', 'description')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->text('description')
-                      ->nullable();
+                $table->text('description')->nullable();
             });
         }
 
         if (!Schema::hasColumn('boards', 'created_at')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->dateTime('created_at')
-                      ->default(now());
+                $table->dateTime('created_at')->default(now());
             });
         }
 
         if (!Schema::hasColumn('boards', 'updated_at')) {
             Schema::table('boards', function (Blueprint $table) {
-                $table->dateTime('updated_at')
-                      ->default(now());
+                $table->dateTime('updated_at')->default(now());
             });
         }
     }
@@ -60,9 +58,9 @@ class BoardUpdate extends Migration
      */
     public function down()
     {
-        \App\Number::query()->delete();
-        \App\Board::query()->delete();
-        \App\User::query()->delete();
+        \App\Models\Number::query()->delete();
+        \App\Models\Board::query()->delete();
+        \App\Models\User::query()->delete();
 
         if (Schema::hasColumn('boards', 'author_id')) {
             Schema::table('boards', function (Blueprint $table) {

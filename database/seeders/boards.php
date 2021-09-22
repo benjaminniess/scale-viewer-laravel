@@ -21,7 +21,7 @@ class boards extends Seeder
             'password' => Hash::make(123456789),
         ]);
 
-        $user_1 = \App\User::orderBy('id', 'desc')->first();
+        $user_1 = \App\Models\User::orderBy('id', 'desc')->first();
 
         DB::table('users')->insert([
             'name' => 'User 2',
@@ -29,7 +29,7 @@ class boards extends Seeder
             'password' => Hash::make(123456789),
         ]);
 
-        $user_2 = \App\User::orderBy('id', 'desc')->first();
+        $user_2 = \App\Models\User::orderBy('id', 'desc')->first();
 
         DB::table('boards')->insert([
             'title' => 'Prices scale',
@@ -40,7 +40,7 @@ class boards extends Seeder
             'updated_at' => Carbon::now(),
         ]);
 
-        $price_board = \App\Board::orderBy('id', 'desc')->first();
+        $price_board = \App\Models\Board::orderBy('id', 'desc')->first();
 
         DB::table('boards')->insert([
             'title' => 'What do we die of?',
@@ -50,7 +50,7 @@ class boards extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
-        $die_board = \App\Board::orderBy('id', 'desc')->first();
+        $die_board = \App\Models\Board::orderBy('id', 'desc')->first();
 
         DB::table('numbers')->insert([
             'title' => 'French debt',

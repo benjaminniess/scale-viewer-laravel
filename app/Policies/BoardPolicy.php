@@ -2,10 +2,10 @@
 
 namespace App\Policies;
 
-use App\Board;
-use App\User;
+use App\Models\Board;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use \Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Access\Response;
 
 class BoardPolicy
 {
@@ -14,7 +14,7 @@ class BoardPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -25,8 +25,8 @@ class BoardPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\Board  $board
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Board  $board
      * @return mixed
      */
     public function view(User $user, Board $board)
@@ -37,7 +37,7 @@ class BoardPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  \App\User  $user
+     * @param  \App\Models\User  $user
      * @return mixed
      */
     public function create(User $user)
@@ -48,22 +48,25 @@ class BoardPolicy
     /**
      * Determine whether the user can update the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\Board  $board
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Board  $board
      * @return mixed
      */
     public function update(User $user, Board $board)
     {
         return $user->is_author($board)
             ? Response::allow()
-            : Response::deny('You must be the board\'s author to update it',403);
+            : Response::deny(
+                'You must be the board\'s author to update it',
+                403
+            );
     }
 
     /**
      * Determine whether the user can delete the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\Board  $board
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Board  $board
      * @return mixed
      */
     public function delete(User $user, Board $board)
@@ -74,8 +77,8 @@ class BoardPolicy
     /**
      * Determine whether the user can restore the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\Board  $board
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Board  $board
      * @return mixed
      */
     public function restore(User $user, Board $board)
@@ -86,8 +89,8 @@ class BoardPolicy
     /**
      * Determine whether the user can permanently delete the model.
      *
-     * @param  \App\User  $user
-     * @param  \App\Board  $board
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Board  $board
      * @return mixed
      */
     public function forceDelete(User $user, Board $board)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Http\Requests\UpdateBoard;
 use Illuminate\Database\Eloquent\Model;
@@ -18,8 +18,9 @@ class Board extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function numbers() {
-        return $this->hasMany('\App\Number');
+    public function numbers()
+    {
+        return $this->hasMany('\App\Models\Number');
     }
 
     /**

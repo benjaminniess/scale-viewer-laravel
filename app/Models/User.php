@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Board;
+use App\Models\Board;
 
 class User extends Authenticatable
 {
@@ -16,18 +16,14 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast to native types.
@@ -39,11 +35,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * @param \App\Board $board
+     * @param \App\Models\Board $board
      * @return bool
      */
     public function is_author(Board $board)
     {
-        return (int)$this->id === (int)$board->author_id;
+        return (int) $this->id === (int) $board->author_id;
     }
 }

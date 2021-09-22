@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Kreait\Firebase\Value\Provider;
 use Auth;
@@ -17,15 +17,18 @@ class GoogleConnectController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if ( ! $request->ajax() ) {
-            abort( 'Only for ajax use' );
+        if (!$request->ajax()) {
+            abort('Only for ajax use');
         }
 
         $this->validate($request, [
             'accessToken' => 'required|string',
         ]);
 
-        $user = \App\Helpers\Firebase::maybe_create_user(Provider::GOOGLE, $request->accessToken);
+        $user = \App\Helpers\Firebase::maybe_create_user(
+            Provider::GOOGLE,
+            $request->accessToken
+        );
 
         Auth::loginUsingId($user->id, true);
     }
