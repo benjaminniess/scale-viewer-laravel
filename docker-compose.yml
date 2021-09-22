@@ -1,80 +1,49 @@
-version: '3.1'
-
+# For more information: https://laravel.com/docs/sail
+version: '3'
 services:
-  app:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    depends_on:
-      - db
-      - mail
-    volumes:
-      - '.:/app'
-    env_file:
-      - .env
-    environment:
-      APP_ENV: local
-      APP_DEBUG: 'true'
-      MAIL_HOST: 'mail'
-      MAIL_PORT: 25
-      MAIL_ENCRYPTION: 'false'
-      MYSQL_ADDON_DB: sevanova
-      MYSQL_ADDON_HOST: db
-      MYSQL_ADDON_PASSWORD: sevanova
-      MYSQL_ADDON_PORT: 3306
-      MYSQL_ADDON_USER: sevanova
-    networks:
-      - traefik
-    labels:
-      traefik.port: '80'
-      traefik.backend: '${URL}'
-      traefik.docker.network: 'traefikforwebdev_webgateway'
-      traefik.frontend.entryPoints: 'http'
-      traefik.frontend.rule: 'Host:${URL}'
-
-  db:
-    image: mariadb:10.4.12
-    # command: --default-authentication-plugin=mysql_native_password
-    volumes:
-      - 'database:/var/lib/mysql'
-    networks:
-      - traefik
-    environment:
-      MYSQL_DATABASE: sevanova
-      MYSQL_USER: sevanova
-      MYSQL_PASSWORD: sevanova
-      MYSQL_ROOT_PASSWORD: sevanova
-    labels:
-      traefik.enable: false
-
-  pma:
-    image: phpmyadmin/phpmyadmin
-    depends_on:
-      - db
-    networks:
-      - traefik
-    labels:
-      traefik.backend: 'pma.${URL}'
-      traefik.docker.network: 'traefikforwebdev_webgateway'
-      traefik.frontend.entryPoints: 'http'
-      traefik.frontend.rule: 'Host:pma.${URL}'
-
-  mail:
-    image: djfarrelly/maildev
-    networks:
-      - traefik
-    labels:
-      traefik.backend: 'mail.${URL}'
-      traefik.docker.network: 'traefikforwebdev_webgateway'
-      traefik.enable: 'true'
-      traefik.frontend.entryPoints: 'http'
-      traefik.frontend.rule: 'Host:mail.${URL}'
-      traefik.port: '80'
-
+    laravel.test:
+        build:
+            context: ./vendor/laravel/sail/runtimes/8.0
+            dockerfile: Dockerfile
+            args:
+                WWWGROUP: '${WWWGROUP}'
+        image: sail-8.0/app
+        extra_hosts:
+            - 'host.docker.internal:host-gateway'
+        ports:
+            - '${APP_PORT:-80}:80'
+        environment:
+            WWWUSER: '${WWWUSER}'
+            LARAVEL_SAIL: 1
+            XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
+            XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - sail
+        depends_on:
+            - mysql
+    mysql:
+        image: 'mysql:8.0'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        volumes:
+            - 'sailmysql:/var/lib/mysql'
+        networks:
+            - sail
+        healthcheck:
+          test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+          retries: 3
+          timeout: 5s
 networks:
-  traefik:
-    external:
-      name: traefikforwebdev_webgateway
-
+    sail:
+        driver: bridge
 volumes:
-  database:
+    sailmysql:
+        driver: local
