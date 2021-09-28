@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Http\Requests\UpdateBoard;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Board extends Model
 {
+    use HasFactory;
+
     protected $guarded = ['id'];
 
     public static $templates = [
