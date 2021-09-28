@@ -9,6 +9,11 @@ use Auth;
 
 class BoardsController extends Controller
 {
+    public function index()
+    {
+        return Board::all();
+    }
+
     /**
      * Display the specified resource.
      *
