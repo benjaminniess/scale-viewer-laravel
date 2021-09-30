@@ -14,12 +14,7 @@ class BoardsController extends Controller {
 		return Board::all();
 	}
 
-	/**
-	 * @param int $boardID
-	 *
-	 * @return Board
-	 */
-	public function show( int $boardID ) {
-		return Board::find( $boardID );
+	public function show( Board $board ) {
+		return $board;
 	}
 }
