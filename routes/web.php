@@ -46,6 +46,4 @@ Route::put( '/board/{board}/numbers/{number}', 'NumbersController@update' )
      ->middleware( 'auth' )
      ->name( 'update_number' );
 
-Route::get( 'google-connect', 'GoogleConnectController' )->name( 'google_connect' );
-
 Auth::routes();
