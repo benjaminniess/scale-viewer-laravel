@@ -16,4 +16,6 @@ use App\Http\Controllers\BoardsController;
 */
 
 Route::get( 'boards', 'BoardsController@index' );
-Route::get( '/boards/{board}', 'BoardsController@show' );
+Route::get( 'boards/{board}', 'BoardsController@show' );
+
+Route::post( 'boards', 'BoardsController@store' );
