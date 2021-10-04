@@ -15,4 +15,3 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect( '/', '/api/boards' );
 
-Auth::routes();
